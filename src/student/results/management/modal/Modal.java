@@ -7,8 +7,10 @@ package student.results.management.modal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import student.results.management.core.database.Delete;
 import student.results.management.core.database.Insert;
 import student.results.management.core.database.Query;
+import student.results.management.core.database.RawQuery;
 
 /**
  *
@@ -53,6 +55,17 @@ public class Modal {
     public int create(String[] values, String[] columns) throws Exception {
         Insert i = new Insert(schemaName, schema, values, columns);
         return i.execute();
+    }
+
+    public boolean delete(String value) throws SQLException {
+        Delete d = new Delete(schemaName, schema[0], value);
+        return true;
+    }
+    
+    public int update(String sql) throws Exception {
+        RawQuery u = new RawQuery(sql);
+        int i = u.execute();
+        return i;
     }
     
 }

@@ -7,17 +7,16 @@ package student.results.management.modal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import student.results.management.modal.Modal;
 
 /**
  *
  * @author Lakmal
  */
-public class User extends Modal{
-    private final String[] schema = {"id", "name", "age", "test"};
+public class Department extends Modal{
+    private final String[] schema = {"id", "name"};
 
-    public User() {
-        super("test_table");
+    public Department() {
+        super("department");
         super.setSchema(schema);
     }
     
@@ -35,5 +34,13 @@ public class User extends Modal{
     
     public int create(String columns[]) throws Exception {
         return super.create(columns);
+    }
+    
+    public boolean delete(String value) throws SQLException {
+        return super.delete(value);
+    }
+    
+    public int update(int id, String name) throws Exception {
+        return super.update("UPDATE department SET name = '" + name + "' WHERE id = " + id);
     }
 }

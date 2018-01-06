@@ -22,7 +22,7 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         String driver = "com.mysql.jdbc.Driver";
         String connectionURL = "jdbc:mysql://localhost:3306/";
-        String databaseName = "test";
+        String databaseName = "student_managment";
         String username = "root";
         String password = "";
         

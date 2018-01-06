@@ -7,17 +7,16 @@ package student.results.management.modal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import student.results.management.modal.Modal;
 
 /**
  *
  * @author Lakmal
  */
-public class User extends Modal{
-    private final String[] schema = {"id", "name", "age", "test"};
+public class Batch extends Modal{
+    private final String[] schema = {"id", "start_year", "name"};
 
-    public User() {
-        super("test_table");
+    public Batch() {
+        super("batch");
         super.setSchema(schema);
     }
     
@@ -35,5 +34,14 @@ public class User extends Modal{
     
     public int create(String columns[]) throws Exception {
         return super.create(columns);
+    }
+    
+    public boolean delete(String value) throws SQLException {
+        return super.delete(value);
+    }
+    
+    public int update(int id, String name, int year) throws Exception {
+        String sql = String.format("UPDATE batch SET name = '%s', start_year = %d WHERE id = %d", name, year, id);
+        return super.update(sql);
     }
 }

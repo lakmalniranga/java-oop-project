@@ -19,13 +19,36 @@ import javax.swing.JOptionPane;
  * @author Lakmal
  */
 public class administrator extends javax.swing.JFrame {
-
+    private String role = null;
     /**
      * Creates new form administrator
      */
     public administrator() throws IOException {
         initComponents();
         setIcon();
+    }
+    
+    public administrator(String role) throws IOException {
+        initComponents();
+        setIcon();
+        this.role = role;
+        checkRole();
+    }
+    
+    private void checkRole() {
+        switch(role) {
+            case "Manager":
+                btnDepartment.setEnabled(false);
+                btnUser.setEnabled(false);
+                break;
+            case "Lecturer":
+                btnDepartment.setEnabled(false);
+                btnUser.setEnabled(false);
+                btnBatch.setEnabled(false);
+                btnModule.setEnabled(false);
+                btnStudent.setEnabled(false);
+                break;
+        }
     }
     
     /**
@@ -38,41 +61,41 @@ public class administrator extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnModule = new javax.swing.JButton();
+        btnStudent = new javax.swing.JButton();
+        btnDepartment = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnUser = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnBatch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
+        setTitle("Student results manager");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/notebook.png"))); // NOI18N
-        jButton1.setText("Module");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnModule.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/notebook.png"))); // NOI18N
+        btnModule.setText("Module");
+        btnModule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnModuleActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_2.png"))); // NOI18N
-        jButton4.setText("Students");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_2.png"))); // NOI18N
+        btnStudent.setText("Students");
+        btnStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnStudentActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/home.png"))); // NOI18N
-        jButton2.setText("Department");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDepartment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/home.png"))); // NOI18N
+        btnDepartment.setText("Department");
+        btnDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnDepartmentActionPerformed(evt);
             }
         });
 
@@ -84,11 +107,11 @@ public class administrator extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_1.png"))); // NOI18N
-        jButton6.setText("Users");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_1.png"))); // NOI18N
+        btnUser.setText("Users");
+        btnUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnUserActionPerformed(evt);
             }
         });
 
@@ -100,11 +123,11 @@ public class administrator extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/folder.png"))); // NOI18N
-        jButton3.setText("Batch");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/folder.png"))); // NOI18N
+        btnBatch.setText("Batch");
+        btnBatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBatchActionPerformed(evt);
             }
         });
 
@@ -121,40 +144,40 @@ public class administrator extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)))
+                                    .addComponent(btnDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnModule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBatch, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(155, 155, 155))
+                        .addGap(119, 119, 119))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton8});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBatch, btnDepartment, btnModule, btnStudent, btnUser, jButton5, jButton8});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBatch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModule, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -179,98 +202,101 @@ public class administrator extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnBatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatchActionPerformed
         try {
-            JFrame b = new batch();
-            b.pack();
-            b.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-            b.setTitle("Student results manager");
-            b.setLocationRelativeTo(null);
+            JFrame b = new batch(this.role);
             b.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnBatchActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         try {
-            JFrame r = new report();
+            JFrame r = new report(this.role);
             r.pack();
             r.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-            r.setTitle("Student results manager");
-            r.setLocationRelativeTo(null);
             r.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
         try {
-            JFrame u = new user();
-            u.pack();
+            JFrame u = new user(this.role);
             u.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-            u.setTitle("Student results manager");
-            u.setLocationRelativeTo(null);
             u.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnUserActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
-            JFrame r = new results();
+            JFrame r = new results(this.role);
             r.pack();
             r.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-            r.setTitle("Student results manager");
             r.setLocationRelativeTo(null);
             r.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepartmentActionPerformed
         try {
-            JFrame d = new department();
+            JFrame d = new department(this.role);
             d.pack();
             d.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-            d.setTitle("Student results manager");
             d.setLocationRelativeTo(null);
             d.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
             Logger.getLogger(administrator.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnDepartmentActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
         try {
-            JFrame s = new student();
+            JFrame s = new student(this.role);
             s.pack();
             s.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
             s.setTitle("Student results manager");
             s.setLocationRelativeTo(null);
             s.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnStudentActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuleActionPerformed
         try {
-            JFrame m = new module();
+            JFrame m = new module(this.role);
             m.pack();
             m.setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
             m.setTitle("Student results manager");
             m.setLocationRelativeTo(null);
             m.setVisible(true);
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnModuleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,12 +342,12 @@ public class administrator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnBatch;
+    private javax.swing.JButton btnDepartment;
+    private javax.swing.JButton btnModule;
+    private javax.swing.JButton btnStudent;
+    private javax.swing.JButton btnUser;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

@@ -5,9 +5,13 @@
  */
 package student.results.management.view;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -22,12 +26,41 @@ import student.results.management.controller.BatchController;
  */
 public class batch extends javax.swing.JFrame {
 
+    private String role;
+
     /**
      * Creates new form batch
      */
     public batch() throws SQLException{
+        try {
+            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         fillTable();
+    }
+    
+    public batch(String role) throws IOException, SQLException {
+        initComponents();
+        fillTable();
+        this.role = role;
+        checkRole();
+    }
+    
+    private void checkRole() {
+        switch(role) {
+            case "Manager":
+                btnDepartment.setEnabled(false);
+                btnUser.setEnabled(false);
+                break;
+            case "Lecturer":
+                btnDepartment.setEnabled(false);
+                btnUser.setEnabled(false);
+                btnModule.setEnabled(false);
+                btnStudent.setEnabled(false);
+                break;
+        }
     }
     
     private void fillTable() throws SQLException {
@@ -61,10 +94,14 @@ public class batch extends javax.swing.JFrame {
         ;
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
-        setResizable(false);
+        jPanel7 = new javax.swing.JPanel();
+        jButton25 = new javax.swing.JButton();
+        btnDepartment = new javax.swing.JButton();
+        btnModule = new javax.swing.JButton();
+        btnStudent = new javax.swing.JButton();
+        btnResult = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
+        btnUser = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -76,8 +113,12 @@ public class batch extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 78, Short.MAX_VALUE)
         );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student results manager");
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Create new batch"));
 
@@ -172,6 +213,94 @@ public class batch extends javax.swing.JFrame {
             }
         });
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jButton25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/menu.png"))); // NOI18N
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+
+        btnDepartment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/home.png"))); // NOI18N
+        btnDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepartmentActionPerformed(evt);
+            }
+        });
+
+        btnModule.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/notebook.png"))); // NOI18N
+        btnModule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModuleActionPerformed(evt);
+            }
+        });
+
+        btnStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_2.png"))); // NOI18N
+        btnStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentActionPerformed(evt);
+            }
+        });
+
+        btnResult.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/notepad.png"))); // NOI18N
+        btnResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResultActionPerformed(evt);
+            }
+        });
+
+        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/list_1.png"))); // NOI18N
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
+
+        btnUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/results/management/assests/user_1.png"))); // NOI18N
+        btnUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDepartment)
+                .addGap(18, 18, 18)
+                .addComponent(btnModule)
+                .addGap(18, 18, 18)
+                .addComponent(btnStudent)
+                .addGap(18, 18, 18)
+                .addComponent(btnResult)
+                .addGap(18, 18, 18)
+                .addComponent(btnReport)
+                .addGap(18, 18, 18)
+                .addComponent(btnUser)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUser)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnModule)
+                        .addComponent(btnStudent)
+                        .addComponent(btnResult))
+                    .addComponent(btnDepartment)
+                    .addComponent(jButton25)
+                    .addComponent(btnReport))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,31 +308,31 @@ public class batch extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))))
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnEdit)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDelete)
-                        .addGap(0, 368, Short.MAX_VALUE)))
+                        .addGap(0, 340, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -226,15 +355,21 @@ public class batch extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        try {
-            int row = tblBatch.getSelectedRow();
-            String id = tblBatch.getValueAt(row, 0).toString();
-            BatchController d = new BatchController();
-            d.delete(id);
-            DefaultTableModel model = (DefaultTableModel)tblBatch.getModel();
-            model.removeRow(row);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
+        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?", "WARNING",
+        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                int row = tblBatch.getSelectedRow();
+                String id = tblBatch.getValueAt(row, 0).toString();
+                BatchController d = new BatchController();
+                if(d.delete(id)) {
+                    DefaultTableModel model = (DefaultTableModel)tblBatch.getModel();
+                    model.removeRow(row);
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(this, "Please select iten to delete", "ERROR" , JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -272,6 +407,93 @@ public class batch extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+       try {
+            JFrame admin = new administrator(this.role);
+            admin.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void btnDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepartmentActionPerformed
+        try {
+            JFrame form = new department(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDepartmentActionPerformed
+
+    private void btnModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuleActionPerformed
+        try {
+            JFrame form = new module(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnModuleActionPerformed
+
+    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
+        try {
+            JFrame form = new student(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnStudentActionPerformed
+
+    private void btnResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultActionPerformed
+        try {
+            JFrame form = new results(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnResultActionPerformed
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        try {
+            JFrame form = new report(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportActionPerformed
+
+    private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
+        try {
+            JFrame form = new user(this.role);
+            form.setVisible(true);
+            setVisible(false);
+            dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -298,7 +520,6 @@ public class batch extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(batch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -314,12 +535,44 @@ public class batch extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDepartment;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnModule;
+    private javax.swing.JButton btnReport;
+    private javax.swing.JButton btnResult;
+    private javax.swing.JButton btnStudent;
+    private javax.swing.JButton btnUser;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spYear;
     private javax.swing.JTable tblBatch;

@@ -39,6 +39,16 @@ public class User extends Modal{
         return users.getData();
     }
     
+    public String getPasswordByUsernameAndRole(String username, String role) throws SQLException {
+        String sql = String.format("SELECT password FROM user where username = '%s' and role = '%s'", username, role);
+        RawQuery users = new RawQuery(sql);
+        ResultSet rs = users.getOne();
+        if (rs.next()) {
+            return rs.getString("password");
+        }
+        return null;
+    }
+    
     public int create(String columns[]) throws Exception {
         return super.create(columns);
     }

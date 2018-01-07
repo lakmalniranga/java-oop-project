@@ -37,5 +37,11 @@ public class RawQuery {
         statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
         return statement.executeQuery();
     }
-
+    
+    public ResultSet getOne() throws SQLException {
+        DatabaseConnection dbInstance = DatabaseConnection.getInstance();
+        statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+        statement.setMaxRows(1);
+        return statement.executeQuery();
+    }
 }

@@ -35,9 +35,8 @@ public class App {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JFrame l = new administrator();
+        JFrame l = new login();
         l.pack();
-        l.setTitle("Student results manager");
         l.setLocationRelativeTo(null);
         l.setVisible(true);
     }

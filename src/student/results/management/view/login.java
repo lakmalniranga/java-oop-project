@@ -51,7 +51,7 @@ public class login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("University student results manager");
+        setTitle("Student results manager");
         setResizable(false);
 
         jScrollPane1.setViewportView(jTextPane1);

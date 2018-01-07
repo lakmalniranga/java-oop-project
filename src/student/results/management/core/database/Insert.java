@@ -44,11 +44,18 @@ public class Insert {
         
             String formatedSchema = Helper.arrayToCommaSeparatedString(schema);
             String formatedColumn = Helper.arrayToCommaSeparatedString(formatedColumnArray);
-                        
+
             statement = dbInstance.getDatabaseConnection().prepareStatement("INSERT INTO " + table + " (" + formatedSchema + " )" + " VALUES (" + formatedColumn + ")");
         } else {
-            String numberOfColumns = Helper.CommaSeparatedQuizMarks(schema.length - 1);
-            statement = dbInstance.getDatabaseConnection().prepareStatement("INSERT INTO " + table + " VALUES (default, " + numberOfColumns + ")");
+            if (schema.length == 1) {
+                String numberOfColumns = Helper.CommaSeparatedQuizMarks(schema.length);
+                String sql = "INSERT INTO " + table + " VALUES (" + numberOfColumns + ")";
+                statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+            } else {
+                String numberOfColumns = Helper.CommaSeparatedQuizMarks(schema.length -1);
+                String sql = "INSERT INTO " + table + " VALUES (default, " + numberOfColumns + ")";
+                statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+            }
         }
         
         for (int i = 0; i < data.length; i++) {

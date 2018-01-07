@@ -6,6 +6,7 @@
 package student.results.management.core.database;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,12 @@ public class RawQuery {
         statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
         res = statement.executeUpdate();
         return res;
+    }
+    
+    public ResultSet getData() throws SQLException {
+        DatabaseConnection dbInstance = DatabaseConnection.getInstance();
+        statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+        return statement.executeQuery();
     }
 
 }

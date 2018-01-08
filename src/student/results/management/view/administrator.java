@@ -22,6 +22,7 @@ public class administrator extends javax.swing.JFrame {
     private String role = null;
     /**
      * Creates new form administrator
+     * @throws java.io.IOException
      */
     public administrator() throws IOException {
         initComponents();
@@ -208,7 +209,7 @@ public class administrator extends javax.swing.JFrame {
             b.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBatchActionPerformed
@@ -221,7 +222,7 @@ public class administrator extends javax.swing.JFrame {
             r.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -233,7 +234,7 @@ public class administrator extends javax.swing.JFrame {
             u.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnUserActionPerformed
@@ -247,7 +248,7 @@ public class administrator extends javax.swing.JFrame {
             r.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -278,7 +279,7 @@ public class administrator extends javax.swing.JFrame {
             s.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnStudentActionPerformed
@@ -293,7 +294,7 @@ public class administrator extends javax.swing.JFrame {
             m.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (Exception ex) {
+        } catch (IOException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnModuleActionPerformed

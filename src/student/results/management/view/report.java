@@ -29,29 +29,30 @@ public class report extends javax.swing.JFrame {
 
     /**
      * Creates new form report
+     * @throws java.sql.SQLException
      */
     public report() throws SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(report.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillDepartment();
         fillBatch();
     }
     
     public report(String role) throws IOException, SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(report.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillDepartment();
         fillBatch();
         this.role = role;
         checkRole();
+    }
+    
+    private void setIcon() {
+        try {
+            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
+        } catch (IOException ex) {
+            Logger.getLogger(report.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void checkRole() {
@@ -145,13 +146,13 @@ public class report extends javax.swing.JFrame {
 
         tblResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tblResult);
@@ -394,10 +395,9 @@ public class report extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUser)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBatch)
-                        .addComponent(btnModule)
-                        .addComponent(btnStudent))
+                    .addComponent(btnModule)
+                    .addComponent(btnStudent)
+                    .addComponent(btnBatch)
                     .addComponent(btnDepartment)
                     .addComponent(jButton32)
                     .addComponent(btnResult))
@@ -473,7 +473,7 @@ public class report extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbDepartmentItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String student_id = tfStudent.getText().toString();
+        String student_id = tfStudent.getText();
         
         ResultController result = new ResultController();
         tblResult.setModel(DbUtils.resultSetToTableModel(result.getAllDataByStudentId(student_id)));

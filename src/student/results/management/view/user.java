@@ -5,6 +5,7 @@
  */
 package student.results.management.view;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import student.results.management.controller.UserController;
+import student.results.management.utils.Validation;
 
 /**
  *
@@ -31,25 +33,25 @@ public class user extends javax.swing.JFrame {
      * Creates new form user
      */
     public user() {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillTable();
     }
     
     public user(String role) throws IOException {
+        setIcon();
+        initComponents();
+        fillTable();
+        this.role = role;
+        checkRole();
+    }
+    
+    private void setIcon() {
         try {
             setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
         } catch (IOException ex) {
             Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
         }
-        initComponents();
-        fillTable();
-        this.role = role;
-        checkRole();
     }
     
     private void checkRole() {
@@ -299,10 +301,9 @@ public class user extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReport)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBatch)
-                        .addComponent(btnModule)
-                        .addComponent(btnStudent))
+                    .addComponent(btnModule)
+                    .addComponent(btnStudent)
+                    .addComponent(btnBatch)
                     .addComponent(btnDepartment)
                     .addComponent(jButton32)
                     .addComponent(btnResult))
@@ -360,13 +361,12 @@ public class user extends javax.swing.JFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
        try {
-            String role = cmbRole.getSelectedItem().toString();
+            String roleOfUser = cmbRole.getSelectedItem().toString();
             String hashed = BCrypt.hashpw(new String(tfPassword.getPassword()), BCrypt.gensalt());
-            
-            UserController b = new UserController();
-            boolean result = b.create(tfName.getText(), tfEmail.getText(), tfUsername.getText(), hashed, role);
-            
-            if (result) {
+     
+            if (Validation.validateEmail(tfEmail) && Validation.checkTextField(tfName, 3) && Validation.checkTextField(tfUsername, 3) && Validation.checkPassField(tfPassword, 3) ) {
+                UserController b = new UserController();
+                b.create(tfName.getText(), tfEmail.getText(), tfUsername.getText(), hashed, roleOfUser);
                 JOptionPane.showMessageDialog(this, "User has been created", "Done" , JOptionPane.INFORMATION_MESSAGE);
                 fillTable();
                 tfName.setText("");
@@ -374,14 +374,14 @@ public class user extends javax.swing.JFrame {
                 tfUsername.setText("");
                 tfPassword.setText("");
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?", "WARNING",
-        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?", "WARNING",
+                JOptionPane.YES_NO_OPTION)) {
             try {
                 int row = tblUser.getSelectedRow();
                 String id = tblUser.getValueAt(row, 0).toString();
@@ -420,7 +420,7 @@ public class user extends javax.swing.JFrame {
 
             int option = JOptionPane.showConfirmDialog(this, message, "Edit User", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
-                if (name.getText() != null && email.getText() != null && username.getText() != null ) {
+                if (Validation.checkTextField(name, 3) && Validation.checkTextField(username, 3) && Validation.validateEmail(email)) {
                     JOptionPane.showMessageDialog(this, "User has been updated", "Updated" , JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Please re-check inputs", "Updated Error" , JOptionPane.ERROR_MESSAGE);
@@ -430,7 +430,7 @@ public class user extends javax.swing.JFrame {
             UserController user = new UserController(); 
             user.update(id, name.getText(), email.getText(), username.getText());
             fillTable();
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -586,4 +586,5 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JPasswordField tfPassword;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
+
 }

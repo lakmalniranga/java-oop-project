@@ -14,9 +14,9 @@ import student.results.management.core.DatabaseConnection;
  * @author Lakmal
  */
 public class Delete {
-    private String table;
-    private String column;
-    private String value;
+    private final String table;
+    private final String column;
+    private final String value;
     private PreparedStatement statement;
     
     public Delete(String table, String column, String value) throws SQLException {

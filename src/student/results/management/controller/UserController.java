@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
-import student.results.management.core.database.RawQuery;
 import student.results.management.modal.User;
 
 /**
@@ -34,8 +33,9 @@ public class UserController {
     
     public ResultSet getAllData() {
         try {
+            String[] columns = {"id", "name", "email", "username", "role"};
             User user = new User();
-            return user.selectAll();
+            return user.select(columns);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
@@ -57,12 +57,8 @@ public class UserController {
         try {
             User user = new User();
             String hash = user.getPasswordByUsernameAndRole(username, role);
-            if (BCrypt.checkpw(password, hash)) {
-                return true;
-            }
-            return false;
-        } catch (Exception ex) {
-            System.out.println(ex);
+            return BCrypt.checkpw(password, hash);
+        } catch (SQLException ex) {
             return false;
         }
     }

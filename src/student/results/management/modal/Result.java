@@ -21,14 +21,17 @@ public class Result extends Modal{
         super.setSchema(schema);
     }
     
+    @Override
     public ResultSet select(String[] columns) throws SQLException {
         return super.select(columns);
     }
     
+    @Override
     public ResultSet select(String[] columns, int limit) throws SQLException {
         return super.select(columns, limit);
     }
     
+    @Override
     public ResultSet selectAll() throws SQLException{
         return super.selectAll();
     }

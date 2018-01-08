@@ -16,7 +16,7 @@ import student.results.management.utils.Helper;
  */
 public class Query {
     private String columns;
-    private String table;
+    private final String table;
     private String where;
     private String statement;
     private int limit;
@@ -44,6 +44,7 @@ public class Query {
      * @param table
      * @param columns
      * columns should be separate by "," commas
+     * @param where
      */
     public Query(String table, String columns, String where) {
         this.limit = 10000;

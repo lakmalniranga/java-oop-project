@@ -274,11 +274,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnUser" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="btnModule" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnStudent" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnResult" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnStudent" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnResult" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnModule" min="-2" max="-2" attributes="0"/>
                       <Component id="btnDepartment" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton25" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnReport" alignment="0" min="-2" max="-2" attributes="0"/>

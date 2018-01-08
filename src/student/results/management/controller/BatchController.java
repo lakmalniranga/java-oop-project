@@ -15,7 +15,7 @@ import student.results.management.modal.Batch;
  *
  * @author Lakmal
  */
-public class BatchController {
+public class BatchController{
     public boolean create(int year, String name) {
         try {
             String[] columns = {"int:" + year, "str:" + name};

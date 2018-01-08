@@ -20,22 +20,27 @@ public class Department extends Modal{
         super.setSchema(schema);
     }
     
+    @Override
     public ResultSet select(String[] columns) throws SQLException {
         return super.select(columns);
     }
     
+    @Override
     public ResultSet select(String[] columns, int limit) throws SQLException {
         return super.select(columns, limit);
     }
     
+    @Override
     public ResultSet selectAll() throws SQLException{
         return super.selectAll();
     }
     
+    @Override
     public int create(String columns[]) throws Exception {
         return super.create(columns);
     }
     
+    @Override
     public boolean delete(String value) throws SQLException {
         return super.delete(value);
     }

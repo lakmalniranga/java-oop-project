@@ -5,12 +5,14 @@
  */
 package student.results.management.view;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
@@ -304,12 +306,13 @@ public class department extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DepartmentController d = new DepartmentController();
         try {
-            boolean result = d.create(tfDeptName.getText());
-            
-            if (result) {
+            if (tfDeptName.getText().length() > 3) {
+                d.create(tfDeptName.getText());
                 JOptionPane.showMessageDialog(this, "Department has been created", "Done" , JOptionPane.INFORMATION_MESSAGE);
                 fillTable();
                 tfDeptName.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check inputs", "ERROR" , JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
@@ -320,13 +323,27 @@ public class department extends javax.swing.JFrame {
          try {
             int row = tblDepartments.getSelectedRow();
             int id = (Integer) tblDepartments.getValueAt(row, 0);
-
-            String input = JOptionPane.showInputDialog(this, "Please enter new name", "Edit", JOptionPane.QUESTION_MESSAGE);
-
-            DepartmentController d = new DepartmentController(); 
-            d.update(id, input);
-            fillTable();
-        } catch (Exception ex) {
+            
+            JTextField name = new JTextField();
+            
+            name.setText(tblDepartments.getValueAt(row, 1).toString());
+            
+            Object[] message = {
+                "Name:", name,
+            };
+            
+            int option = JOptionPane.showConfirmDialog(this, message, "Edit Department", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION) {
+                if (name.getText().length() > 1) {
+                    DepartmentController d = new DepartmentController(); 
+                    d.update(id, name.getText());
+                    fillTable();
+                    JOptionPane.showMessageDialog(this, "Department has been updated", "Updated" , JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please re-check inputs", "Updated Error" , JOptionPane.ERROR_MESSAGE);
+                }
+            } 
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -367,9 +384,7 @@ public class department extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBatchActionPerformed
@@ -380,9 +395,7 @@ public class department extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModuleActionPerformed
@@ -393,9 +406,7 @@ public class department extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnStudentActionPerformed
@@ -406,9 +417,7 @@ public class department extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnResultActionPerformed
@@ -419,9 +428,7 @@ public class department extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(department.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnReportActionPerformed

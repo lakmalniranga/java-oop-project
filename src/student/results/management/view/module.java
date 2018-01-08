@@ -5,6 +5,7 @@
  */
 package student.results.management.view;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ import student.results.management.controller.ModuleController;
 import student.results.management.modal.Batch;
 import student.results.management.modal.Department;
 import student.results.management.modal.User;
+import student.results.management.utils.Validation;
 
 /**
  *
@@ -32,13 +34,10 @@ public class module extends javax.swing.JFrame {
 
     /**
      * Creates new form module
+     * @throws java.sql.SQLException
      */
     public module() throws SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(module.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillTable();
         fillDepartment();
@@ -47,11 +46,7 @@ public class module extends javax.swing.JFrame {
     }
     
     public module(String role) throws IOException, SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(module.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillTable();
         fillDepartment();
@@ -59,6 +54,14 @@ public class module extends javax.swing.JFrame {
         fillLecturer();
         this.role = role;
         checkRole();
+    }
+    
+    private void setIcon() {
+        try {
+            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
+        } catch (IOException ex) {
+            Logger.getLogger(module.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void checkRole() {
@@ -330,10 +333,9 @@ public class module extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUser)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBatch)
-                        .addComponent(btnStudent)
-                        .addComponent(btnResult))
+                    .addComponent(btnStudent)
+                    .addComponent(btnResult)
+                    .addComponent(btnBatch)
                     .addComponent(btnDepartment)
                     .addComponent(jButton32)
                     .addComponent(btnReport))
@@ -385,14 +387,16 @@ public class module extends javax.swing.JFrame {
             int department_id = Integer.parseInt(cmbDepartment.getSelectedItem().toString().split(" - ")[0]);
             int lecturer_id = Integer.parseInt(cmbLecturer.getSelectedItem().toString().split(" - ")[0]);
             
-            ModuleController module = new ModuleController();
-            boolean result = module.create(tfName.getText(), department_id, batch_id, lecturer_id);
-            if (result) {
+            if (tfName.getText().length() > 5) {
+                ModuleController module = new ModuleController();
+                module.create(tfName.getText(), department_id, batch_id, lecturer_id);
                 JOptionPane.showMessageDialog(this, "Student has been created", "Done" , JOptionPane.INFORMATION_MESSAGE);
                 fillTable();
                 tfName.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check inputs", "ERROR" , JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -438,20 +442,19 @@ public class module extends javax.swing.JFrame {
                 "Batch ID:", batch_id,
                 "Lecturer ID:", lecturer_id
             };
-
+            
             int option = JOptionPane.showConfirmDialog(this, message, "Edit Student", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
-                if (name.getText() != null ) {
+                if (Validation.checkTextField(department_id, 1) && Validation.checkTextField(name, 3) && Validation.checkTextField(batch_id, 1) && Validation.checkTextField(lecturer_id, 1)) {
+                    ModuleController module = new ModuleController(); 
+                    module.update(id, name.getText(), department_id.getText(), batch_id.getText(), lecturer_id.getText());
+                    fillTable();
                     JOptionPane.showMessageDialog(this, "Student has been updated", "Updated" , JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Please re-check inputs", "Updated Error" , JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
-            ModuleController module = new ModuleController(); 
-            module.update(id, name.getText(), department_id.getText(), batch_id.getText(), lecturer_id.getText());
-            fillTable();
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -595,13 +598,6 @@ public class module extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbBatch;
     private javax.swing.JComboBox<String> cmbDepartment;
     private javax.swing.JComboBox<String> cmbLecturer;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -609,7 +605,6 @@ public class module extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblModule;

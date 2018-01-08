@@ -5,6 +5,7 @@
  */
 package student.results.management.view;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import student.results.management.controller.BatchController;
+import student.results.management.utils.Validation;
 
 /**
  *
@@ -30,6 +32,7 @@ public class batch extends javax.swing.JFrame {
 
     /**
      * Creates new form batch
+     * @throws java.sql.SQLException
      */
     public batch() throws SQLException{
         try {
@@ -291,10 +294,9 @@ public class batch extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUser)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnModule)
-                        .addComponent(btnStudent)
-                        .addComponent(btnResult))
+                    .addComponent(btnStudent)
+                    .addComponent(btnResult)
+                    .addComponent(btnModule)
                     .addComponent(btnDepartment)
                     .addComponent(jButton25)
                     .addComponent(btnReport))
@@ -343,13 +345,15 @@ public class batch extends javax.swing.JFrame {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         try {
             BatchController b = new BatchController();
-            boolean result = b.create((Integer) spYear.getValue(), tfName.getText());
-            if (result) {
+            if ((Integer) spYear.getValue() > 2017 && Validation.checkTextField(tfName, 5)) {
+                b.create((Integer) spYear.getValue(), tfName.getText());
                 JOptionPane.showMessageDialog(this, "Batch has been created", "Done" , JOptionPane.INFORMATION_MESSAGE);
                 fillTable();
                 tfName.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check inputs", "ERROR" , JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -392,17 +396,16 @@ public class batch extends javax.swing.JFrame {
 
             int option = JOptionPane.showConfirmDialog(this, message, "Edit Batch", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
-                if ((Integer) year.getValue() > 2017 && name.getText() != null ) {
+                if ((Integer) year.getValue() > 2017 && Validation.checkTextField(name, 5) ) {
+                    BatchController b = new BatchController(); 
+                    b.update(id, name.getText(), (Integer) year.getValue());
+                    fillTable();
                     JOptionPane.showMessageDialog(this, "Batch has been updated", "Updated" , JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Please re-check inputs", "Updated Error" , JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
-            BatchController b = new BatchController(); 
-            b.update(id, name.getText(), (Integer) year.getValue());
-            fillTable();
-        } catch (Exception ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -542,36 +545,12 @@ public class batch extends javax.swing.JFrame {
     private javax.swing.JButton btnResult;
     private javax.swing.JButton btnStudent;
     private javax.swing.JButton btnUser;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spYear;

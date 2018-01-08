@@ -18,11 +18,9 @@ import student.results.management.modal.Result;
 public class ResultController {
     public boolean create(int student_id, int module_id, int year, int semester, int results) {
         try {
-            
             int[] columns = {student_id, module_id, year, semester, results};
             Result result = new Result();
             result.create(columns);
-            
             return true;
         } catch (SQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "Duplicate values has been tried to insert, Please check again", "ERROR" , JOptionPane.ERROR_MESSAGE);

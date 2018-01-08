@@ -30,8 +30,8 @@ public class DatabaseConnection {
             Class.forName(driver).newInstance();
             this.connection = (Connection)DriverManager.getConnection(connectionURL + databaseName, username, password);
         }
-        catch (Exception sqle) {
-            sqle.printStackTrace();
+        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex) {
+            ex.printStackTrace();
         }
     }
     

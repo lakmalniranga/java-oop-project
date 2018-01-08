@@ -21,7 +21,6 @@ public class StudentController {
             String[] columns = {"int:" + batch_id, "int:" + department_id, "str:" + name, "str:" + email};
             Student s = new Student();
             s.create(columns);
-            
             return true;
         } catch (SQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "Duplicate values has been tried to insert, Please check again", "ERROR" , JOptionPane.ERROR_MESSAGE);

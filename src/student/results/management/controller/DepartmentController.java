@@ -20,7 +20,6 @@ public class DepartmentController {
             String[] columns = {"str:" + name};
             Department d = new Department();
             d.create(columns);
-            
             return true;
         } catch (SQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "Duplicate values has been tried to insert, Please check again", "ERROR" , JOptionPane.ERROR_MESSAGE);

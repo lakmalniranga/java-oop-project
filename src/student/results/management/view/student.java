@@ -5,6 +5,7 @@
  */
 package student.results.management.view;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import net.proteanit.sql.DbUtils;
 import student.results.management.controller.StudentController;
 import student.results.management.modal.Batch;
 import student.results.management.modal.Department;
+import student.results.management.utils.Validation;
 
 /**
  *
@@ -33,11 +35,7 @@ public class student extends javax.swing.JFrame {
      * Creates new form student
      */
     public student() throws SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillTable();
         fillBatch();
@@ -45,17 +43,21 @@ public class student extends javax.swing.JFrame {
     }
     
     public student(String role) throws IOException, SQLException {
-        try {
-            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
-        } catch (IOException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIcon();
         initComponents();
         fillTable();
         fillBatch();
         fillDepartment();
         this.role = role; 
         checkRole();
+    }
+    
+    private void setIcon() {
+        try {
+            setIconImage(ImageIO.read(new File(getClass().getResource("/student/results/management/assests/list.png").getFile())));
+        } catch (IOException ex) {
+            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void checkRole() {
@@ -130,7 +132,6 @@ public class student extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student results manager");
-        setPreferredSize(new java.awt.Dimension(1000, 600));
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -301,10 +302,9 @@ public class student extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUser)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBatch)
-                        .addComponent(btnModule)
-                        .addComponent(btnResult))
+                    .addComponent(btnModule)
+                    .addComponent(btnResult)
+                    .addComponent(btnBatch)
                     .addComponent(btnDepartment)
                     .addComponent(jButton32)
                     .addComponent(btnReport))
@@ -355,15 +355,17 @@ public class student extends javax.swing.JFrame {
             int batch_id = Integer.parseInt(cbBatch.getSelectedItem().toString().split(" - ")[0]);
             int department_id = Integer.parseInt(cbDepartment.getSelectedItem().toString().split(" - ")[0]);
             
-            StudentController b = new StudentController();
-            boolean result = b.create(batch_id, department_id, tfName.getText(), tfEmail.getText());
-            if (result) {
+            if (Validation.checkTextField(tfName, 5) && Validation.validateEmail(tfEmail)) {
+                StudentController b = new StudentController();
+                b.create(batch_id, department_id, tfName.getText(), tfEmail.getText());
                 JOptionPane.showMessageDialog(this, "Student has been created", "Done" , JOptionPane.INFORMATION_MESSAGE);
                 fillTable();
                 tfName.setText("");
                 tfEmail.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check inputs", "ERROR" , JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | NumberFormatException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnNewActionPerformed
@@ -412,17 +414,16 @@ public class student extends javax.swing.JFrame {
 
             int option = JOptionPane.showConfirmDialog(this, message, "Edit Student", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
-                if (name.getText() != null ) {
+                if (Validation.checkTextField(name, 5) && Validation.validateEmail(email)) {
+                    StudentController s = new StudentController(); 
+                    s.update(id, Integer.parseInt(batch_id.getText()), Integer.parseInt(department_id.getText()), name.getText(), email.getText());
+                    fillTable();
                     JOptionPane.showMessageDialog(this, "Student has been updated", "Updated" , JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Please re-check inputs", "Updated Error" , JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
-            StudentController s = new StudentController(); 
-            s.update(id, Integer.parseInt(batch_id.getText()), Integer.parseInt(department_id.getText()), name.getText(), email.getText());
-            fillTable();
-        } catch (Exception ex) {
+        } catch (HeadlessException | NumberFormatException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -457,9 +458,7 @@ public class student extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDepartmentActionPerformed
@@ -470,9 +469,7 @@ public class student extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModuleActionPerformed
@@ -483,9 +480,7 @@ public class student extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnResultActionPerformed
@@ -496,9 +491,7 @@ public class student extends javax.swing.JFrame {
             form.setVisible(true);
             setVisible(false);
             dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnReportActionPerformed

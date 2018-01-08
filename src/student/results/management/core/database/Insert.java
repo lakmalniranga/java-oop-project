@@ -17,10 +17,10 @@ import student.results.management.utils.Helper;
  * @author Lakmal
  */
 public class Insert {
-    private String table;
-    private String[] schema;
+    private final String table;
+    private final String[] schema;
     private String[] column;
-    private String[] data;
+    private final String[] data;
     private PreparedStatement statement;
       
     public Insert(String table, String[] schema, String[] data) {
@@ -41,10 +41,8 @@ public class Insert {
         
         if (column != null && column.length > 0) {
             String[] formatedColumnArray = Helper.formatArrayToSchemaModal(schema, column);
-        
             String formatedSchema = Helper.arrayToCommaSeparatedString(schema);
             String formatedColumn = Helper.arrayToCommaSeparatedString(formatedColumnArray);
-
             statement = dbInstance.getDatabaseConnection().prepareStatement("INSERT INTO " + table + " (" + formatedSchema + " )" + " VALUES (" + formatedColumn + ")");
         } else {
             if (schema.length == 1) {
@@ -78,7 +76,6 @@ public class Insert {
                     throw Exception("invalid data type of values");
             }
         }
-        
         int res = statement.executeUpdate();  
         return res;
     }

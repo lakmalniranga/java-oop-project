@@ -6,19 +6,12 @@
 package student.results.management.utils;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Lakmal
  */
 public class Helper {
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    
     public static String arrayToCommaSeparatedString(String[] arr) {
         String formatedString = null;
         if (arr.length > 0) {

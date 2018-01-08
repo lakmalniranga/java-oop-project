@@ -6,15 +6,18 @@
 package student.results.management.utils;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import static student.results.management.utils.Helper.VALID_EMAIL_ADDRESS_REGEX;
+
 
 /**
  *
  * @author Lakmal
  */
 public class Validation {
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     public static boolean validateEmail(JTextField email) {
         Matcher matcher;
         matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email.getText());

@@ -45,15 +45,15 @@ public class Insert {
             String formatedColumn = Helper.arrayToCommaSeparatedString(formatedColumnArray);
             statement = dbInstance.getDatabaseConnection().prepareStatement("INSERT INTO " + table + " (" + formatedSchema + " )" + " VALUES (" + formatedColumn + ")");
         } else {
+            String sql;
             if (schema.length == 1) {
                 String numberOfColumns = Helper.CommaSeparatedQuizMarks(schema.length);
-                String sql = "INSERT INTO " + table + " VALUES (" + numberOfColumns + ")";
-                statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+                sql = "INSERT INTO " + table + " VALUES (" + numberOfColumns + ")";
             } else {
                 String numberOfColumns = Helper.CommaSeparatedQuizMarks(schema.length -1);
-                String sql = "INSERT INTO " + table + " VALUES (default, " + numberOfColumns + ")";
-                statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
+                sql = "INSERT INTO " + table + " VALUES (default, " + numberOfColumns + ")";
             }
+            statement = dbInstance.getDatabaseConnection().prepareStatement(sql);
         }
         
         for (int i = 0; i < data.length; i++) {
